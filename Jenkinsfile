@@ -5,6 +5,14 @@ pipeline {
         maven 'Maven'
     }
 
+    parameters {
+        booleanParam(
+            name: 'executeTests',
+            defaultValue: true,
+            description: 'Run Test Stage?'
+        )
+    }
+
     environment {
         VERSION = "1.0"
     }
@@ -18,6 +26,9 @@ pipeline {
         }
 
         stage('Test') {
+            when {
+                expression { params.executeTests == true }
+            }
             steps {
                 echo 'Testing..'
             }
